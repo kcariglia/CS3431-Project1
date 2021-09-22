@@ -41,3 +41,28 @@ buildingName varchar2(20),
 participantEmailAddress varchar2(25) references Participants(participantEmailAddress),
 category varchar2(15),
 foreign key (galleryName, buildingName) references Gallery(galleryName, buildingName));
+
+create table TwoD(
+artID varchar2(10) primary key,
+category varchar2(15) default 'TwoD' not null,
+medium varchar2(25),
+constraint TwoDCategoryVal check (category in ('TwoD')),
+constraint TwoD_FK foreign key (artID, category) references Artworks(artID, category)
+);
+
+create table Pottery(
+artID varchar2(10) primary key,
+category varchar2(15) default 'Pottery' not null,
+clayBodyUsed varchar2(25),
+constraint PotteryCategoryVal check (category in ('Pottery')),
+constraint Pottery_FK foreign key (artID, category) references Artworks(artID, category)
+);
+
+create table Ranking(
+participantEmailAddress varchar2(25) not null,
+artID varchar2(10) not null,
+rank number(2) check (rank <= 20) not null,
+constraint Ranking_PK primary key (participantEmailAddress, artID),
+constraint Ranking_ParticipantFK foreign key (participantEmailAddress) references Participants(participantEmailAddress),
+constraint Ranking_ArtworkFK foreign key (artID) references Artworks(artID)
+);
