@@ -1,5 +1,8 @@
 --Project 1 group 2
 
+drop table Ranking;
+drop table TwoD;
+drop table Pottery;
 drop table Artworks;
 drop table Gallery;
 drop table Building;
@@ -40,6 +43,7 @@ galleryName varchar2(20),
 buildingName varchar2(20),
 participantEmailAddress varchar2(25) references Participants(participantEmailAddress),
 category varchar2(15),
+constraint Artworks_un unique (artID, category),
 foreign key (galleryName, buildingName) references Gallery(galleryName, buildingName));
 
 create table TwoD(
@@ -63,6 +67,7 @@ participantEmailAddress varchar2(25) not null,
 artID varchar2(10) not null,
 rank number(2) check (rank <= 20) not null,
 constraint Ranking_PK primary key (participantEmailAddress, artID),
+constraint Ranking_UQ unique (participantEmailAddress, rank),
 constraint Ranking_ParticipantFK foreign key (participantEmailAddress) references Participants(participantEmailAddress),
 constraint Ranking_ArtworkFK foreign key (artID) references Artworks(artID)
 );
