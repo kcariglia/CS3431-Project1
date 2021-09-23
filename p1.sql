@@ -1,5 +1,6 @@
 --Project 1 group 2
 
+drop table ArtworksWon;
 drop table Ranking;
 drop table TwoD;
 drop table Pottery;
@@ -70,4 +71,12 @@ constraint Ranking_PK primary key (participantEmailAddress, artID),
 constraint Ranking_UQ unique (participantEmailAddress, rank),
 constraint Ranking_ParticipantFK foreign key (participantEmailAddress) references Participants(participantEmailAddress),
 constraint Ranking_ArtworkFK foreign key (artID) references Artworks(artID)
+);
+
+create table ArtworksWon(
+orderChosen number(4) primary key,
+participantEmailAddress varchar2(25) unique,
+artID varchar2(10) unique,
+constraint ArtworksWon_ParticipantFK foreign key (participantEmailAddress) references Participants(participantEmailAddress),
+constraint ArtworksWon_ArtworkFK foreign key (artID) references Artworks(artID)
 );
