@@ -13,3 +13,21 @@ order by winOrder;
 select category, count(title) as NumItemsWon
 from WinnerOrder
 group by rollup (WinnerOrder.category);
+
+--2
+set serveroutput on;
+create or replace procedure FavoriteArtwork(artwork_ID in number) as
+total number;
+cursor a is
+select count(email)
+from RankList
+where RankList.artworkID = artwork_ID 
+group by RankList.email;
+begin 
+open a;
+fetch a into total;
+if a%notfound then
+    raise_application_error(-20001, 'An error was encountered – ' || SQLCODE || ' -ERROR-' || SQLERRM);
+end if;
+dbms_output.put_line('Artwork #' || artwork_ID || ': Selected ' || total || ' times.');
+end FavoriteArtwork;
