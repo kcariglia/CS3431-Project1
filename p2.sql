@@ -31,3 +31,21 @@ if a%notfound then
 end if;
 dbms_output.put_line('Artwork #' || artwork_ID || ': Selected ' || total || ' times.');
 end FavoriteArtwork;
+
+
+--5
+create or replace trigger MemberConstraint
+before insert or update of memberID on Participant
+Declare     
+temp number(4);
+cursor m is select yearJoined, hasExpired from Participant where Participant.memberID is not null;
+Begin     
+Select extract(year from sysdate) into temp from dual;
+for rec in m loop
+    if (rec.yearJoined is null) then
+    rec.yearJoined := temp;
+    rec.hasExpired := 'N';
+    end if;
+end loop;
+end;
+/
