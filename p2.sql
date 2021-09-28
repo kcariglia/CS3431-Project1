@@ -8,3 +8,8 @@ W.firstName || ' ' || W.lastName as WINNER
 from (select * from Artwork A join Participant P on A.creatorEmail = P.email) AP 
 join Participant W on AP.winnerEmail = W.email
 order by winOrder;
+
+--1B
+select category, count(title) as NumItemsWon
+from WinnerOrder
+group by rollup (WinnerOrder.category);
