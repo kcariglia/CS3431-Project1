@@ -1,7 +1,7 @@
 --Place code for Project Phase 2 here
 --Created by: Brigid Auclair, Katherine Cariglia, Gabi Tessier
 
---Create WinnerOrder View
+--1A
 create or replace view WinnerOrder as
 select winOrder, title, category, AP.firstName || ' ' || AP.lastName as ARTIST, 
 W.firstName || ' ' || W.lastName as WINNER
@@ -32,6 +32,15 @@ end if;
 dbms_output.put_line('Artwork #' || artwork_ID || ': Selected ' || total || ' times.');
 end FavoriteArtwork;
 
+--4
+create or replace trigger DeleteWonArtwork
+after insert or update on Artwork
+for each row
+when (new.winOrder is not null)
+begin
+	delete from RankList where artworkID = :new.artworkID;
+end;
+/
 
 --5
 create or replace trigger MemberConstraint
