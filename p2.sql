@@ -32,6 +32,18 @@ end if;
 dbms_output.put_line('Artwork #' || artwork_ID || ': Selected ' || total || ' times.');
 end FavoriteArtwork;
 
+--3
+create or replace trigger OnlyTicketedRanking 
+before insert or update on RankList 
+for each row
+Declare tickets char(1);
+Begin
+    Select hasTicket into tickets from Participant; 
+    IF (tickets = 'N') then
+        RAISE_APPLICATION_ERROR(-20004, 'Invalid Ticket');  
+    END IF;      
+End;
+
 --4
 create or replace trigger DeleteWonArtwork
 after insert or update on Artwork
