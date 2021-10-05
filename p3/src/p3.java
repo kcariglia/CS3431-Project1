@@ -51,7 +51,7 @@ public class p3 {
                 Statement st1 = connection.createStatement();
                 String query1 = "select email, firstName ||' '|| lastName AS name, phone, city ||','|| state AS address, memberID\n" +
                         "from Participant\n" +
-                        "where email = emailAdd;";
+                        "where email = emailAdd";
                 ResultSet r1 = st1.executeQuery(query1);
 
                 String email;
