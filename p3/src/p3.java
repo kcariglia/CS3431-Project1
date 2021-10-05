@@ -91,6 +91,51 @@ public class p3 {
                 return;
             }
         }
+		if(option == 3){
+            System.out.println("Enter Building Name: ");
+            String building = scanner.nextLine();
+
+            try {
+                Statement st3 = connection.createStatement();
+                String query3 = "select buildingName, street, city, state, zipcode, galleryName\n" +
+                        "from Building natural join Gallery\n" +
+                        "where Building.buildingName = \n" +
+                        "group by buildingName " + building + "\n" +
+                        "order by galleryName desc;";
+                ResultSet r3 = st3.executeQuery(query3);
+
+                String street;
+                String city;
+                String state;
+                String zipcode;
+                String galleryName;
+                int numgal = 1;
+
+                while(r3.next()){
+                    street = r3.getString("street");
+                    city = r3.getString("city");
+                    state = r3.getString("state");
+                    zipcode = r3.getString("zipcode");
+                    galleryName = r3.getString("galleryName");
+
+                    System.out.println("Building Gallery Information\n" +
+                            "Building name: " + building +
+                            "Building address: " + street + " " + city + ", " + state + " " + zipcode+ "\n" +
+                            "Gallery " + Integer.toString(numgal) + ": " + galleryName);
+
+                    numgal++;
+                    r3.close();
+                    st3.close();
+                    connection.close();
+                }
+
+
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+                return;
+            }
+        }
         if(option == 4){
             System.out.println("Enter the Participant’s Email Address: ");
             String email = scanner.nextLine();
