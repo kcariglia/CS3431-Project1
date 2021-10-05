@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class p3 {
     public static void main(String[] args) {
-        System.out.println(args.length);
+
         if (args.length < 2) {
             System.out.println("You need to include your UserID and Password parameters on the command line");
             return;}
@@ -41,8 +41,6 @@ public class p3 {
 
         Scanner scanner = new Scanner(System.in);  // Create a Scanner object
         int option = scanner.nextInt();
-
-        DBConnect.connect(username, password);
 
         if(option == 1){
             //query 1 goes here
@@ -97,8 +95,9 @@ public class p3 {
         }
         if(option == 4){
 
+
+
         }
 
     }
 }
-
