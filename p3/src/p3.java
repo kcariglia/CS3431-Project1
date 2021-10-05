@@ -40,6 +40,7 @@ public class p3 {
 
 
         Scanner scanner = new Scanner(System.in);  // Create a Scanner object
+		Scanner otherScanner = new Scanner(System.in);
         int option = scanner.nextInt();
 
         if(option == 1){
@@ -97,9 +98,51 @@ public class p3 {
 
         }
         if(option == 2){
-            //query 2 goes here
+            //Print out user prompt
+            System.out.println("Enter Pottery ID: ");
+            String potteryID = otherScanner.nextLine();
+
+            try{
+                //Make the SQL statement
+                Statement st2 = connection.createStatement();
+                String query2 = "select artworkID, firstName || ' ' || lastName AS ArtistName, title, clayBody, price\n" +
+                        "from (select A.artworkID, creatorEmail, title, clayBody, price from\n" +
+                        "Artwork A join Pottery P on A.artworkID = P.artworkID) AP join\n" +
+                        "Participant Part on AP.creatorEmail = Part.email\n" +
+                        "where artworkID = " + potteryID;
+                System.out.println(query2);
+                ResultSet r2 = st2.executeQuery(query2);
+                //Initialize variables
+                String artworkID = "";
+                String artistName = "";
+                String title = "";
+                String clayBody = "";
+                String price = "";
+                while (r2.next()) {
+                    artworkID = r2.getString("artworkID");
+                    artistName = r2.getString("ArtistName");
+                    title = r2.getString("title");
+                    clayBody = r2.getString("clayBody");
+                    price = r2.getString("price");
+                }
+                //Print out info
+                System.out.println("Pottery Information\n" +
+                        "Artwork ID: " + artworkID + "\n" +
+                        "Artist Name: " + artistName + "\n" +
+                        "Title: " + title + "\n" +
+                        "Clay Body: " + clayBody + "\n" +
+                        "Price: " + price);
+
+                r2.close();
+                st2.close();
+                connection.close();
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+                return;
+            }
         }
-        if(option == 3){
+		if(option == 3){
             System.out.println("Enter Building Name: ");
             String building = scanner.nextLine();
 
