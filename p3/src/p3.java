@@ -68,14 +68,14 @@ public class p3 {
                     memberID = r1.getString("memberID");
 
                     if(memberID != null) {
-                        System.out.println("Building Gallery Information\n" +
+                        System.out.println("Participant Information\n" +
                                 "Email: " + email +
                                 "Name: " + name + "\n" +
                                 "Phone " + phone + "\n" +
                                 "City/State: " + address + "\n" +
                                 "Member ID: " + memberID);
                     } else {
-                        System.out.println("Building Gallery Information\n" +
+                        System.out.println("Participant Information\n" +
                                 "Email: " + email +
                                 "Name: " + name + "\n" +
                                 "Phone " + phone + "\n" +
