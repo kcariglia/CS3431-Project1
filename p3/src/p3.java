@@ -94,7 +94,24 @@ public class p3 {
             }
         }
         if(option == 4){
+            System.out.println("Enter the Participant’s Email Address: ");
+            String email = scanner.nextLine();
+            System.out.println("Enter the updated Member ID: ");
+            String memid = Integer.toString(scanner.nextInt());
 
+            try{
+                Statement st4 = connection.createStatement();
+                String update = "update Participant\n" +
+                        "set memberID = " + memid + "\n" +
+                        "where email = " + email +";";
+
+                st4.executeUpdate(update);
+                st4.close();
+            }
+            catch (SQLException e) {
+                e.printStackTrace();
+                return;
+            }
 
 
         }
