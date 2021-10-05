@@ -44,6 +44,48 @@ public class p3 {
 
         if(option == 1){
             //query 1 goes here
+            System.out.println("Enter Participant’s email address: ");
+            String emailAdd = scanner.nextLine();
+
+            try {
+                Statement st1 = connection.createStatement();
+                String query1 = "select email, firstName ||' '|| lastName AS name, phone, city ||','|| state AS address, memberID\n" +
+                        "from Participant\n" +
+                        "where email = emailAdd AND memberID != null ;";
+                ResultSet r1 = st1.executeQuery(query1);
+
+                String email;
+                String name;
+                String phone;
+                String address;
+                String memberID;
+
+                while(r1.next()){
+                    email = r1.getString("email");
+                    name = r1.getString("name");
+                    phone = r1.getString("phone");
+                    address = r1.getString("address");
+                    memberID = r1.getString("memberID");
+
+                    System.out.println("Building Gallery Information\n" +
+                            "Email: " + email +
+                            "Name: " + name + "\n" +
+                            "Phone " + phone + "\n" +
+                            "City/State: "+ address+ "\n" +
+                            "Member ID: " +memberID);
+
+                    r1.close();
+                    st1.close();
+                    connection.close();
+                }
+
+
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+                return;
+            }
+
         }
         if(option == 2){
             //query 2 goes here
