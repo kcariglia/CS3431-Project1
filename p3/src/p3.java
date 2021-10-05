@@ -51,7 +51,7 @@ public class p3 {
                 Statement st1 = connection.createStatement();
                 String query1 = "select email, firstName ||' '|| lastName AS name, phone, city ||','|| state AS address, memberID\n" +
                         "from Participant\n" +
-                        "where email = emailAdd AND memberID != null ;";
+                        "where email = emailAdd;";
                 ResultSet r1 = st1.executeQuery(query1);
 
                 String email;
@@ -67,12 +67,21 @@ public class p3 {
                     address = r1.getString("address");
                     memberID = r1.getString("memberID");
 
-                    System.out.println("Building Gallery Information\n" +
-                            "Email: " + email +
-                            "Name: " + name + "\n" +
-                            "Phone " + phone + "\n" +
-                            "City/State: "+ address+ "\n" +
-                            "Member ID: " +memberID);
+                    if(memberID != null) {
+                        System.out.println("Building Gallery Information\n" +
+                                "Email: " + email +
+                                "Name: " + name + "\n" +
+                                "Phone " + phone + "\n" +
+                                "City/State: " + address + "\n" +
+                                "Member ID: " + memberID);
+                    } else {
+                        System.out.println("Building Gallery Information\n" +
+                                "Email: " + email +
+                                "Name: " + name + "\n" +
+                                "Phone " + phone + "\n" +
+                                "City/State: " + address + "\n");
+                    }
+
 
                     r1.close();
                     st1.close();
