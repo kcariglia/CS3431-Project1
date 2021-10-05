@@ -46,13 +46,13 @@ public class p3 {
         if(option == 1){
             //query 1 goes here
             System.out.println("Enter Participant’s email address: ");
-            String emailAdd = scanner.nextLine();
+            String emailAdd = otherScanner.nextLine();
 
             try {
                 Statement st1 = connection.createStatement();
                 String query1 = "select email, firstName ||' '|| lastName AS name, phone, city ||','|| state AS address, memberID\n" +
                         "from Participant\n" +
-                        "where email = emailAdd";
+                        "where email = " + "'" + emailAdd+ "'";
                 ResultSet r1 = st1.executeQuery(query1);
 
                 String email;
@@ -70,25 +70,22 @@ public class p3 {
 
                     if(memberID != null) {
                         System.out.println("Participant Information\n" +
-                                "Email: " + email +
+                                "Email: " + email + "\n" +
                                 "Name: " + name + "\n" +
                                 "Phone " + phone + "\n" +
                                 "City/State: " + address + "\n" +
                                 "Member ID: " + memberID);
                     } else {
                         System.out.println("Participant Information\n" +
-                                "Email: " + email +
+                                "Email: " + email + "\n" +
                                 "Name: " + name + "\n" +
                                 "Phone " + phone + "\n" +
                                 "City/State: " + address + "\n");
                     }
-
-
-                    r1.close();
-                    st1.close();
-                    connection.close();
                 }
-
+				r1.close();
+                st1.close();
+                connection.close();
 
             }
             catch (SQLException e){
@@ -144,15 +141,15 @@ public class p3 {
         }
 		if(option == 3){
             System.out.println("Enter Building Name: ");
-            String building = scanner.nextLine();
+            String building = otherScanner.nextLine();
 
             try {
                 Statement st3 = connection.createStatement();
-                String query3 = "select buildingName, street, city, state, zipcode, galleryName\n" +
-                        "from Building natural join Gallery\n" +
-                        "where Building.buildingName = \n" +
-                        "group by buildingName " + building + "\n" +
-                        "order by galleryName desc;";
+                String query3 = "select B.buildingName, street, city, state, zipcode, galleryName\n" +
+                        "from Building B join Gallery G\n" +
+                        "on B.buildingName = G.buildingName\n" +
+                        "where B.buildingName = " + "'" + building + "'" + "\n" +
+                        "order by galleryName desc";
                 ResultSet r3 = st3.executeQuery(query3);
 
                 String street;
@@ -169,17 +166,21 @@ public class p3 {
                     zipcode = r3.getString("zipcode");
                     galleryName = r3.getString("galleryName");
 
-                    System.out.println("Building Gallery Information\n" +
-                            "Building name: " + building +
-                            "Building address: " + street + " " + city + ", " + state + " " + zipcode+ "\n" +
-                            "Gallery " + Integer.toString(numgal) + ": " + galleryName);
+                    if(numgal == 1) {
+                        System.out.println("Building Gallery Information\n" +
+                                "Building name: " + building + "\n" +
+                                "Building address: " + street + " " + city + ", " + state + " " + zipcode + "\n" +
+                                "Gallery " + Integer.toString(numgal) + ": " + galleryName);
+                    }
+                    else{
+                        System.out.println("Gallery " + Integer.toString(numgal) + ": " + galleryName);
+                    }
 
                     numgal++;
-                    r3.close();
-                    st3.close();
-                    connection.close();
                 }
-
+				r3.close();
+                st3.close();
+                connection.close();
 
             }
             catch (SQLException e){
@@ -189,7 +190,7 @@ public class p3 {
         }
         if(option == 4){
             System.out.println("Enter the Participant’s Email Address: ");
-            String email = scanner.nextLine();
+            String email = otherScanner.nextLine();
             System.out.println("Enter the updated Member ID: ");
             String memid = Integer.toString(scanner.nextInt());
 
@@ -197,7 +198,7 @@ public class p3 {
                 Statement st4 = connection.createStatement();
                 String update = "update Participant\n" +
                         "set memberID = " + memid + "\n" +
-                        "where email = " + email +";";
+                        "where email = " + "'" + email + "'";
 
                 st4.executeUpdate(update);
                 st4.close();
